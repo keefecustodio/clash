@@ -26,9 +26,17 @@ const teams = [
         ['Dahyun', 'http://images6.fanpop.com/image/photos/43400000/Dahyun-twice-jyp-ent-43468116-300-300.jpg'],
         ['Chaeyoung', 'https://i.pinimg.com/originals/96/93/93/969393b960067b0acfa1484ac9f5cdde.jpg']
     ],
-
     // // KPOP GROUPS
     // ['BLACKPINK', 'TWICE', 'GOT7', 'BTS', 'STAYC'],
+]
+
+const valMaps = [
+    'Bind',
+    'Haven',
+    'Split',
+    'Ascent',
+    'Icebox',
+    'Breeze'
 ]
 
 //add prefix
@@ -54,6 +62,11 @@ function shuffle(array) {
 
 client.on('message', (message) => {
 
+    if(message.content === '#pickval') {
+        const random = Math.floor(Math.random() * valMaps.length)
+        message.channel.send(`Time to play on ${valMaps[random]}!`)
+    }
+
     if(message.content.startsWith('#pickrandom')) {
         if(message.content === '#pickrandom') {
             message.channel.send('Please input a list of elements separated by spaces for me to work with.')
@@ -70,8 +83,6 @@ client.on('message', (message) => {
             message.channel.send('Please input a list of players separated by spaces for me to work with.')
         } else {
             let randomTeamSet = teams[Math.floor(Math.random() * teams.length)]
-            // console.log(randomTeamSet)
-            // const randomTeamElements = randomTeamSet[Math.floor(Math.random() * randomTeamSet.length)]
             let randomTeamElements = shuffle(randomTeamSet)
 
             let allPlayers = message.content.slice(7).trim().replace(/\s+/g, ' ').split(' ')
@@ -100,30 +111,3 @@ client.on('message', (message) => {
 })
 
 client.login(process.env.CLASH_BOT_TOKEN)
-
-/* 
-
-BLACKPINK
-Jennie
-Lisa
-Rose
-Jisoo
-
-TWICE
-Sana
-Tzuyu
-Momo
-Nayeon
-Mina
-Jeongyeon
-Jihyo
-Dahyun
-Chaeyoung
-
-KPOP GROUPS
-BLACKPINK
-TWICE
-BTS
-GOT7
-
-*/
